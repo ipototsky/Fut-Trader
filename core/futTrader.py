@@ -1,3 +1,4 @@
+import json
 import fut
 import fut.core
 import time
@@ -8,7 +9,8 @@ from pprint import pprint
 class FutTrader:
 
     def __init__(self):
-        self.rarePlayers = {}
+        self.prices_by_id = {}
+        self.init_prices()
         self.players = fut.core.players()
 
         email = 'pototskyvanya@gmail.com'
@@ -23,8 +25,9 @@ class FutTrader:
         premier_league = 13
         laLiga = 53
 
-        players = self.session.searchAuctions(ctype='player', level='gold', league=premier_league, max_buy=1500)
-        rare_players_rating_80 = [p for p in players if p['rareflag'] == 1 and p['rating'] >= 80]
+        players = self.session.searchAuctions(ctype='player', level='gold', league=premier_league, max_buy=2000)
+        rare_players_rating_80 = [p for p in players if p['rareflag'] == 1 and p['rating'] >= 80 ]
+        interesting_players = [p for p in players if p['rareflag'] == 1 and p['rating'] >= 80 and p['resourceId'] in self.prices_by_id]
 
         for rare_player in rare_players_rating_80:
             players_for_compare = []
@@ -50,6 +53,14 @@ class FutTrader:
     def test(self, id):
         result = self.session.searchDefinition(id)
         print(result)
+
+    def init_prices(self):
+        with open('../help/prices.json') as f:
+            prices_by_id = json.load(f)
+        for p in prices_by_id['prices']:
+            self.prices_by_id[p['id']] = {'id': p['id'],
+                                'name': p['name'],
+                                'price': p['price']}
 
 
 trader = FutTrader()

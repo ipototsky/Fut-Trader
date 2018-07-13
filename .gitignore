@@ -3,3 +3,4 @@ token.txt
 *.idea
 fut.log
 .DS_Store
+data/db

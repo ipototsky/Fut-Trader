@@ -4,7 +4,7 @@ import json
 from pprint import pprint
 
 
-with open('../tests/data/players.json') as f:
+with open('../tests/help/players.json') as f:
     data = json.load(f)
 
 legendPlayers = data['LegendsPlayers']

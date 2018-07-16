@@ -8,7 +8,7 @@ class FutApi:
         secret = 'kolasa'
         platform = 'xbox360'
 
-        self.session = fut.Core(email=email, passwd=password, secret_answer=secret, platform=platform, debug=True)
+        self.session = fut.Core(email=email, passwd=password, secret_answer=secret, platform=platform, debug=True, cookies='../connector/cookies.txt', token='../connector/token.txt')
 
     def get_session(self):
         return self.session

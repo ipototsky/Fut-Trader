@@ -5,6 +5,8 @@ import time
 import random
 from pprint import pprint
 
+from core.connector.fut_api import FutApi
+
 
 class FutTrader:
 
@@ -13,12 +15,7 @@ class FutTrader:
         self.init_prices()
         self.players = fut.core.players()
 
-        email = 'pototskyvanya@gmail.com'
-        password = 'Kolasa621963'
-        secret = 'kolasa'
-        platform = 'xbox360'
-
-        self.session = fut.Core(email=email, passwd=password, secret_answer=secret, platform=platform, debug=True)
+        self.session = FutApi().get_session()
         time.sleep(random.randint(1, 3))
 
     def run(self):
@@ -55,7 +52,7 @@ class FutTrader:
         print(result)
 
     def init_prices(self):
-        with open('../help/prices.json') as f:
+        with open('../../help/prices.json') as f:
             prices_by_id = json.load(f)
         for p in prices_by_id['prices']:
             self.prices_by_id[p['id']] = {'id': p['id'],
